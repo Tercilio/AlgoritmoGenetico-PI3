@@ -1,0 +1,4 @@
+INDEX VERSION 1.131+C:\Users\tercilio.fonseca\Desktop\PASTAS\ESTUDOS\CÓDIGOS-PROJETOS\AlgoritmoGenetico-PI3\.metadata\.plugins\org.eclipse.jdt.core
+1865797976.index
+3216820900.index
+1991655398.index

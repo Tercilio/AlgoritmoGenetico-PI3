@@ -1,0 +1,95 @@
+package algoritmo;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import entidades.AgenteSaude;
+import entidades.AlgoritmoGenetico;
+import entidades.Individuo;
+
+public class ClassePrincipal {
+
+	public static void main(String[] args) {
+
+		// Criando uma Lista de Agentes de Saúde:
+		List<AgenteSaude> ListaAgentes = new ArrayList<>();
+
+		// Atribuindo valores para a lista de Agentes:
+		ListaAgentes.add(new AgenteSaude("Agente 01", 100.0, 8.00));
+		ListaAgentes.add(new AgenteSaude("Agente 02", 90.0, 8.00));
+		ListaAgentes.add(new AgenteSaude("Agente 03", 89.0, 8.00));
+		ListaAgentes.add(new AgenteSaude("Agente 04", 88.0, 8.00));
+		ListaAgentes.add(new AgenteSaude("Agente 05", 92.0, 8.00));
+		ListaAgentes.add(new AgenteSaude("Agente 06", 93.0, 8.00));
+		ListaAgentes.add(new AgenteSaude("Agente 07", 89.0, 8.00));
+		ListaAgentes.add(new AgenteSaude("Agente 08", 83.0, 8.00));
+		ListaAgentes.add(new AgenteSaude("Agente 09", 87.0, 8.00));
+		ListaAgentes.add(new AgenteSaude("Agente 10", 95.0, 8.00));
+		ListaAgentes.add(new AgenteSaude("Agente 11", 92.0, 8.00));
+		ListaAgentes.add(new AgenteSaude("Agente 12", 86.0, 8.00));
+		ListaAgentes.add(new AgenteSaude("Agente 13", 84.0, 8.00));
+		ListaAgentes.add(new AgenteSaude("Agente 14", 93.0, 8.00));
+		ListaAgentes.add(new AgenteSaude("Agente 15", 85.0, 8.00));
+		ListaAgentes.add(new AgenteSaude("Agente 16", 93.0, 8.00));
+		ListaAgentes.add(new AgenteSaude("Agente 17", 98.0, 8.00));
+		ListaAgentes.add(new AgenteSaude("Agente 18", 90.0, 8.00));
+		ListaAgentes.add(new AgenteSaude("Agente 19", 86.0, 8.00));
+		ListaAgentes.add(new AgenteSaude("Agente 20", 90.0, 8.00));
+		
+		
+		List nomes = new ArrayList<>();
+		List qtdPessoasVacinaDia = new ArrayList<>();
+		List qtsHorasTrabalhaDia = new ArrayList<>();
+		for (AgenteSaude agenteSaude : ListaAgentes) {
+			nomes.add(agenteSaude.getNome());
+			qtdPessoasVacinaDia.add(agenteSaude.getQtdPessoasVacinaDia());
+			qtsHorasTrabalhaDia.add(agenteSaude.getQtsHorasTrabalhaDia());
+		}
+
+		
+		Double Pessoas = 900.00;
+		
+//		Individuo ind1 = new Individuo(qtdPessoasVacinaDia, qtsHorasTrabalhaDia, Pessoas);
+//		System.out.println("Indivíduo 1 ==> " + ind1.getCromossomo());
+//		ind1.avaliacao();
+//		System.out.println(("Nota: " + ind1.getNotaAvaliacao()));
+//		System.out.println("Pessoas Vacinadas: " + ind1.getPessoasVacinadas());
+//		
+//		
+//		Individuo ind2 = new Individuo(qtdPessoasVacinaDia, qtsHorasTrabalhaDia, Pessoas);
+//		System.out.println("\nIndivíduo 2 ==> " + ind2.getCromossomo());
+//		ind2.avaliacao();
+//		System.out.println(("Nota: " + ind2.getNotaAvaliacao()));
+//		System.out.println("Pessoas Vacinadas: " + ind2.getPessoasVacinadas());
+//		
+//		
+//		ind1.crossover(ind2);
+//		ind1.mutacao(0.05); //taxa de 5% (tem que ser BAIXA pra nao trocar tudo)
+//		ind2.mutacao(0.05); //taxa de 5%
+		
+		int tamanhoPopulacao = 20;
+		AlgoritmoGenetico ag = new AlgoritmoGenetico(tamanhoPopulacao);
+		ag.inicializaPopulacao(qtdPessoasVacinaDia, qtsHorasTrabalhaDia, Pessoas);
+		
+		for(Individuo individuo: ag.getPopulacao()) {
+			individuo.avaliacao();
+		}
+		
+		ag.ordenaPopulacao();
+		ag.melhorIndividuo(ag.getPopulacao().get(0));
+		System.out.println("Melhor Solução para o problema: " + ag.getMelhorSolucao().getCromossomo());
+		System.out.println("Nota do Melhor Indivíduo: " + ag.getMelhorSolucao().getNotaAvaliacao());
+		
+		Double soma = ag.somaAvaliacoes();
+		ag.selecionaPai(soma);
+		System.out.println("Soma das avaliações: " + soma);
+		
+		for(int i =0; i < ag.getTamanhoPopulacao(); i++) {
+			System.out.println("\n**** Individuo " + i + ": ****");
+			System.out.println("Quantas Pessoas Vacina por Dia = " + ag.getPopulacao().get(i).getQtdPessoasVacinaDia());
+		    System.out.println("Quantas Horas Trabalha por dia = " + ag.getPopulacao().get(i).getQtsHorasTrabalhaDia());
+		    System.out.println("Cromossomo ==> "  + ag.getPopulacao().get(i).getCromossomo());
+		    System.out.println("Nota = " + ag.getPopulacao().get(i).getNotaAvaliacao());
+		}
+	}
+}
